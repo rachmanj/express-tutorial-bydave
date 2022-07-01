@@ -1,1 +1,28 @@
-[{"username":"omanof","password":"$2b$10$Ee26CiaQUSDFubbmgrzIauslmdQA2Dvm7PgMMWbv.ThjPBRhXyaIe","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9tYW5vZiIsImlhdCI6MTY1NjU2MDkxOSwiZXhwIjoxNjU2NjQ3MzE5fQ.HnAdKRTDd1f2z9gW3nKn_1phkB8SXqKY5cnJeQvM3OM"},{"username":"dalmi","password":"$2b$10$WcUwmb/IhP7e9eDEu/Y3R.96nl.ZuBluwtakme05evh2Ykp2ZOoU2","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbG1pIiwiaWF0IjoxNjU2NTY3Mjg5LCJleHAiOjE2NTY2NTM2ODl9.aGunBUzArGH_yelDNLQyfd7Yxz-HjXkdXElDHXlz35s"}]
+[
+  {
+    "username": "dalmi",
+    "roles": {
+      "User": 2001
+    },
+    "password": "$2b$10$WcUwmb/IhP7e9eDEu/Y3R.96nl.ZuBluwtakme05evh2Ykp2ZOoU2",
+    "refreshToken": ""
+  },
+  {
+    "username": "omanof",
+    "roles": {
+      "User": 2001,
+      "Editor": 1984,
+      "Admin": 5150
+    },
+    "password": "$2b$10$Ee26CiaQUSDFubbmgrzIauslmdQA2Dvm7PgMMWbv.ThjPBRhXyaIe",
+    "refreshToken": ""
+  },
+  {
+    "username": "dalmi",
+    "roles": {
+      "Editor": 1984
+    },
+    "password": "$2b$10$WcUwmb/IhP7e9eDEu/Y3R.96nl.ZuBluwtakme05evh2Ykp2ZOoU2",
+    "refreshToken": ""
+  }
+]

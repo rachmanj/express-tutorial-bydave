@@ -1,54 +1,40 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const usersDB = {
-  users: require("../model/users.json"),
+  users: require('../model/users.json'),
   setUsers: function (data) {
     this.users = data;
   },
 };
 
 const handleRefreshToken = (req, res) => {
-  const cookies = req.cookies
-  if (!cookies?.jwt) return res.sendStatus(401)
-  console.log(cookies.jwt)
-    
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(401);
+  console.log(cookies.jwt);
+  const refreshToken = cookies.jwt;
 
   const foundUser = usersDB.users.find(
-    (person) => person.username === user
+    person => person.refreshToken === refreshToken
   );
-  if (!foundUser) return res.sendStatus(401); // Unauthorized
+  if (!foundUser) return res.sendStatus(403); // Forbidden
   // evaluate password
-  const match = bcrypt.compare(pwd, foundUser.password);
-  if (match) {
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+    if (err || foundUser.username !== decoded.username)
+      return res.sendStatus(403);
+    const roles = Object.values(foundUser.roles);
     const accessToken = jwt.sign(
-      { username: foundUser.username },
+      {
+        userInfo: {
+          username: decoded.username,
+          roles,
+        },
+      },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: '30s' }
     );
-    const refreshToken = jwt.sign(
-      { username: foundUser.username },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "1d" }
-    );
-    // saving refreshToken with current user
-    const otherUsers = usersDB.users.filter(
-      (person) => person.username !== foundUser.username
-    );
-    const currentUser = { ...foundUser, refreshToken };
-    usersDB.setUsers([...otherUsers, currentUser]);
-    await fsPromises.writeFile(
-      path.join(__dirname, "../", "model", "users.json"),
-      JSON.stringify(usersDB.users)
-    );
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
     res.json({ accessToken });
-  } else {
-    res.sendStatus(401);
-  }
+  });
 };
 
-module.exports = { handleLogin };
+module.exports = { handleRefreshToken };
